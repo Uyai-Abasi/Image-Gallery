@@ -1,5 +1,6 @@
-  import React,{useEffect,useState} from 'react'
+  import React,{useEffect,useState,useRef} from 'react'
   import { Card,Stack,Grid,Typography,Paper ,Box,Skeleton} from '@mui/material'
+  import Sortable from 'sortablejs';
 
   import img from '../image/prayer.jpg'
   import img1 from '../image/fitness.jpg'
@@ -16,6 +17,9 @@
   import img12 from '../image/istockphoto-1481468103-612x612.jpg'
   import img13 from '../image/istockphoto-1483060668-612x612.jpg'
   import img14 from '../image/istockphoto-1484739997-612x612.jpg'
+  import img16 from '../image/food.jpg'
+  import img17 from '../image/fr.jpg'
+  import img18 from '../image/fruit.jpg'
   import img15 from '../image/istockphoto-1530497500-612x612.jpg'
   import AppBar from './appbar'
   import Image from 'next/image'
@@ -48,6 +52,11 @@
         },
         {
           id: 6,
+          img: img16,
+          tag: 'Food',
+        },
+        {
+          id: 18,
           img: img6,
           tag: 'Chess',
         },
@@ -90,13 +99,24 @@
           img: img15,
           tag: 'Family',
         },
+        {
+          id: 16,
+          img: img17,
+          tag: 'Vegies',
+        },
+        {
+          id: 17,
+          img: img18,
+          tag: 'Food',
+        },
     
     ];
   export default function ImageGallery({ searchQuery }) {
     const [imagesLoaded, setImagesLoaded] = useState(false);
     const [imageData, setImageData] = useState(images); 
     const [draggedImage, setDraggedImage] = useState(null);
-  
+    const gridContainerRef = useRef(null);
+
     useEffect(() => {
       setTimeout(() => {
         setImagesLoaded(true);
@@ -175,9 +195,24 @@
       setDraggedImage(null);
       console.log(`Dropped image with ID ${draggedImage.id} onto image with ID ${targetImage.id}`);
     };
-    return (
+
+    useEffect(() => {
+      const gridContainer = gridContainerRef.current;
+   
+        new Sortable(gridContainer, {
+          animation: 150,
+          onEnd: (e) => {
+         
+            const { oldIndex, newIndex } = e;
+           
+          },
+        });
+   
     
-  <Grid container spacing={2} rowSpacing={5} columnSpacing={5}>
+    }, []);
+    return (
+      <div style={{ overflowY: 'scroll', height: '100vh' }}>
+  <Grid container spacing={2} rowSpacing={5} columnSpacing={5} ref={gridContainerRef} sx={{padding:'32px',marginTop:"10px"}} >
         {imageData.map((image) => (
           <Grid
             item
@@ -190,7 +225,8 @@
           >
             <div
             style={{cursor:'move'}}
-              draggable
+            draggable
+           
               onTouchStart={(e) => handleTouchStart(e, image)}
               onTouchMove={handleTouchMove}
               onTouchEnd={(e) => handleTouchEnd(e, image)}
@@ -214,7 +250,7 @@
                   <Image src={image.img} layout="fill" objectFit="cover" alt="project_card" />
                 </Box>
               ) : (
-                <Skeleton variant="rectangular" width={350} height={200} />
+                <Skeleton variant="rectangular" width={500} height={200} />
               )}
               <Typography variant="h6">{image.tag}</Typography>
             </Card>
@@ -222,6 +258,6 @@
         </Grid>
       ))}
     </Grid>
-        
+        </div>
     )
   }

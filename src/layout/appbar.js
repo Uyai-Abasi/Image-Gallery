@@ -39,7 +39,7 @@ const Search = styled('div')(({ theme }) => ({
   }));
   
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
+    color: 'white',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -70,7 +70,7 @@ console.log(searchQuery)
   
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)',}}>
+      <AppBar position="fixed" style={{ backgroundColor: 'rgba(0, 0, 0, 1)',}}>
         <Toolbar >
           <IconButton
             size="large"
