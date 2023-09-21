@@ -42,6 +42,9 @@ export default function Home() {
       else if (error.code === 'auth/invalid-email') {
         setError('Invalid email format. Please enter a valid email address.');
       }
+        else if(error.code === 'auth/invalid-login-credentials'){
+          setError('invalid login credentials');
+        }
       else if(error.code =='auth/weak-password'){
         setError('Weak-Password:Password should be at least 6 characters')
       }
