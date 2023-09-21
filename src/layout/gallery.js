@@ -120,7 +120,7 @@
     useEffect(() => {
       setTimeout(() => {
         setImagesLoaded(true);
-      }, 2000);
+      }, 1000);
     }, []);
     useEffect(() => {
       if (searchQuery.trim() === '') {
